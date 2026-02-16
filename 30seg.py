@@ -2,7 +2,8 @@ import turtle
 import random
 
 punts = 5
-temps = 30
+temps = 10
+record = 0
 
 r = random.Random()
 
@@ -71,7 +72,7 @@ def click(x, y):
             reapareixer_tortuga()
 
 def temporitzador():
-    global punts, temps
+    global punts, temps, record
     msg_temps.clear()
     msg_temps.write(f"Time: {temps}", align="center", font=("Arial", 18, "bold"))
     if temps > 0:
@@ -83,6 +84,13 @@ def temporitzador():
         tp_msg_punts(0, -20)
         msg_punts.write(f"Score: {punts}", align="center", font=("Arial", 40, "bold"))
         tp_msg_punts(0, 250)
+        if punts > record:
+            record = punts
+            tp_msg_temps(0, 230)
+            msg_temps.color("red")
+            msg_temps.write(f"New record!!!", align="center", font=("Arial", 30, "bold"))
+            msg_temps.color("white")
+            tp_msg_temps(0, 210)
 
 tp_msg_punts(0, 250)
 tp_msg_temps(0, 210)
