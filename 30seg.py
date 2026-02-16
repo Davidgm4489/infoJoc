@@ -49,6 +49,11 @@ def quadrat():
         t.right(90)
     t.penup()
 
+def reiniciar():
+    wn.ontimer(iniciar,)
+    msg_punts.clear()
+    msg_temps.clear()
+
 def reapareixer_tortuga():
     coord_x = r.randrange(-180, 180)
     coord_y = r.randrange(-180, 180)
@@ -102,4 +107,5 @@ reapareixer_tortuga()
 wn.listen()
 wn.onscreenclick(click)
 wn.onkeypress(wn.bye, "Escape")
+wn.onkeypress(reiniciar, "r")
 wn.mainloop()
