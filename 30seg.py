@@ -23,6 +23,10 @@ def tp_msg_punts(x, y):
     msg_punts.penup()
     msg_punts.goto(x, y)
     msg_punts.pendown()
+def tp_tortuga(x, y):
+    t.penup()
+    t.goto(x, y)
+    t.pendown()
 
 def quadrat():
     t.goto(-200, 200)
@@ -31,6 +35,16 @@ def quadrat():
         t.forward(400)
         t.right(90)
     t.penup()
+
+def reapareixer_tortuga():
+    coord_x = r.randrange(-180, 180)
+    coord_y = r.randrange(-180, 180)
+    tp_tortuga(coord_x, coord_y)
+
+def tp_msg_punts(x, y):
+    msg_punts.penup()
+    msg_punts.goto(x, y)
+    msg_punts.pendown()
 
 def actualitzar_punts():
     msg_punts.clear()
@@ -41,6 +55,8 @@ def click(x, y):
         global punts
         punts += 1
         actualitzar_punts()
+        reapareixer_tortuga()
+
 
 tp_msg_punts(0, 250)
 quadrat()
