@@ -19,6 +19,11 @@ msg_punts.ht()
 msg_punts.color("white")
 msg_punts.penup()
 
+msg_temps = turtle.Turtle()
+msg_temps.ht()
+msg_temps.color("white")
+msg_temps.penup()
+
 def tp_msg_punts(x, y):
     msg_punts.penup()
     msg_punts.goto(x, y)
@@ -56,6 +61,12 @@ def click(x, y):
         punts += 1
         actualitzar_punts()
         reapareixer_tortuga()
+
+def temporitzador(temps=30):
+    global punts
+    while temps != 0:
+        temps += -1
+        msg_temps.ontimer(escriure_temps,1000)
 
 tp_msg_punts(0, 250)
 quadrat()
