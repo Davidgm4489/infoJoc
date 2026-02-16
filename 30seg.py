@@ -1,6 +1,8 @@
 import turtle
 import random
+
 punts = 5
+temps = 30
 
 r = random.Random()
 
@@ -11,7 +13,8 @@ wn.setup(600, 600)
 t = turtle.Turtle()
 t.shape("turtle")
 t.color("green")
-t.speed(punts)
+t.pencolor("white")
+t.speed(0)
 t.penup()
 
 msg_punts = turtle.Turtle()
@@ -24,14 +27,18 @@ msg_temps.ht()
 msg_temps.color("white")
 msg_temps.penup()
 
-def tp_msg_punts(x, y):
-    msg_punts.penup()
-    msg_punts.goto(x, y)
-    msg_punts.pendown()
 def tp_tortuga(x, y):
     t.penup()
     t.goto(x, y)
     t.pendown()
+def tp_msg_punts(x, y):
+    msg_punts.penup()
+    msg_punts.goto(x, y)
+    msg_punts.pendown()
+def tp_msg_temps(x, y):
+    msg_temps.penup()
+    msg_temps.goto(x, y)
+    msg_temps.pendown()
 
 def quadrat():
     t.goto(-200, 200)
@@ -53,24 +60,36 @@ def tp_msg_punts(x, y):
 
 def actualitzar_punts():
     msg_punts.clear()
-    msg_punts.write(f"{punts}punts", align="center", font=("Arial", 30, "bold"))
+    msg_punts.write(f"Score: {punts}", align="center", font=("Arial", 30, "bold"))
 
 def click(x, y):
-    if t.distance(x, y) < 15:
-        global punts
-        punts += 1
-        actualitzar_punts()
-        reapareixer_tortuga()
+    if temps > 0:
+        if t.distance(x, y) < 15:
+            global punts
+            punts += 1
+            actualitzar_punts()
+            reapareixer_tortuga()
 
-def temporitzador(temps=30):
-    global punts
-    while temps != 0:
-        temps += -1
-        msg_temps.ontimer(escriure_temps,1000)
+def temporitzador():
+    global punts, temps
+    msg_temps.clear()
+    msg_temps.write(f"Time: {temps}", align="center", font=("Arial", 18, "bold"))
+    if temps > 0:
+        temps -= 1
+        wn.ontimer(temporitzador,1000)
+    else:
+        msg_punts.clear()
+        msg_temps.clear()
+        tp_msg_punts(0, -20)
+        msg_punts.write(f"Score: {punts}", align="center", font=("Arial", 40, "bold"))
+        tp_msg_punts(0, 250)
 
 tp_msg_punts(0, 250)
+tp_msg_temps(0, 210)
 quadrat()
+temporitzador()
 actualitzar_punts()
+reapareixer_tortuga()
 
 wn.listen()
 wn.onscreenclick(click)
