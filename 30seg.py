@@ -1,6 +1,6 @@
 import turtle
 import random
-contador = 5
+punts = 5
 
 r = random.Random()
 
@@ -11,19 +11,42 @@ wn.setup(600, 600)
 t = turtle.Turtle()
 t.shape("turtle")
 t.color("green")
-t.speed(contador)
+t.speed(punts)
 t.penup()
 
-def actualitzar_pts():
-    msg_pts.clear()
-    msg_pts.write(f"{pts}pts", align="center", font=("Arial", 30, "bold"))
+msg_punts = turtle.Turtle()
+msg_punts.ht()
+msg_punts.color("white")
+msg_punts.penup()
+
+def tp_msg_punts(x, y):
+    msg_punts.penup()
+    msg_punts.goto(x, y)
+    msg_punts.pendown()
+
+def quadrat():
+    t.goto(-200, 200)
+    t.pendown()
+    for _ in range(4):
+        t.forward(400)
+        t.right(90)
+    t.penup()
+
+def actualitzar_punts():
+    msg_punts.clear()
+    msg_punts.write(f"{punts}punts", align="center", font=("Arial", 30, "bold"))
 
 def click(x, y):
-    if -150 < x < 150 and -150 < y < 150:
-        global pts
-        pts += multiplicador
-        actualitzar_tot()
+    if t.distance(x, y) < 15:
+        global punts
+        punts += 1
+        actualitzar_punts()
+
+tp_msg_punts(0, 250)
+quadrat()
+actualitzar_punts()
 
 wn.listen()
 wn.onscreenclick(click)
 wn.onkeypress(wn.bye, "Escape")
+wn.mainloop()
