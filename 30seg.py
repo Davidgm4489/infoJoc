@@ -57,7 +57,6 @@ def click(x, y):
         actualitzar_punts()
         reapareixer_tortuga()
 
-
 tp_msg_punts(0, 250)
 quadrat()
 actualitzar_punts()
