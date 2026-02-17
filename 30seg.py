@@ -1,7 +1,7 @@
 import turtle
 import random
 
-punts = 5
+punts = 0
 temps = 10
 record = 0
 
@@ -49,41 +49,34 @@ def quadrat():
         t.right(90)
     t.penup()
 
-def reiniciar():
-    wn.ontimer(iniciar,)
-    msg_punts.clear()
-    msg_temps.clear()
-
 def reapareixer_tortuga():
     coord_x = r.randrange(-180, 180)
     coord_y = r.randrange(-180, 180)
     tp_tortuga(coord_x, coord_y)
-
-def tp_msg_punts(x, y):
-    msg_punts.penup()
-    msg_punts.goto(x, y)
-    msg_punts.pendown()
 
 def actualitzar_punts():
     msg_punts.clear()
     msg_punts.write(f"Score: {punts}", align="center", font=("Arial", 30, "bold"))
 
 def click(x, y):
+    global punts
     if temps > 0:
         if t.distance(x, y) < 15:
-            global punts
             punts += 1
             actualitzar_punts()
             reapareixer_tortuga()
 
 def temporitzador():
-    global punts, temps, record
+    global temps, record, temporizador_actiu
+    if not temporizador_actiu:
+        return
     msg_temps.clear()
     msg_temps.write(f"Time: {temps}", align="center", font=("Arial", 18, "bold"))
     if temps > 0:
         temps -= 1
-        wn.ontimer(temporitzador,1000)
+        wn.ontimer(temporitzador, 1000)
     else:
+        temporizador_actiu = False
         msg_punts.clear()
         msg_temps.clear()
         tp_msg_punts(0, -20)
@@ -93,9 +86,25 @@ def temporitzador():
             record = punts
             tp_msg_temps(0, 230)
             msg_temps.color("red")
-            msg_temps.write(f"New record!!!", align="center", font=("Arial", 30, "bold"))
+            msg_temps.write("New record!!!", align="center", font=("Arial", 30, "bold"))
             msg_temps.color("white")
-            tp_msg_temps(0, 210)
+        tp_msg_temps(0, -200)
+        msg_temps.write("Press R to restart", align="center", font=("Arial", 18, "bold"))
+        tp_msg_temps(0, 210)
+
+def reiniciar():
+    global punts, temps, temporizador_actiu
+    punts = 0
+    temps = 10
+    temporizador_actiu = True
+    msg_punts.clear()
+    msg_temps.clear()
+    tp_msg_punts(0, 250)
+    tp_msg_temps(0, 210)
+    actualitzar_punts()
+    reapareixer_tortuga()
+    temporitzador()
+
 
 tp_msg_punts(0, 250)
 tp_msg_temps(0, 210)
