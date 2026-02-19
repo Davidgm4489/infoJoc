@@ -4,6 +4,7 @@ import random
 punts = 0
 temps = 10
 record = 0
+temporizador_actiu = False
 
 r = random.Random()
 
@@ -74,6 +75,7 @@ def temporitzador():
     msg_temps.write(f"Time: {temps}", align="center", font=("Arial", 18, "bold"))
     if temps > 0:
         temps -= 1
+        reapareixer_tortuga()
         wn.ontimer(temporitzador, 1000)
     else:
         temporizador_actiu = False
@@ -109,9 +111,11 @@ def reiniciar():
 tp_msg_punts(0, 250)
 tp_msg_temps(0, 210)
 quadrat()
-temporitzador()
 actualitzar_punts()
 reapareixer_tortuga()
+
+temporizador_actiu = True
+temporitzador()
 
 wn.listen()
 wn.onscreenclick(click)
